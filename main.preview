@@ -1,0 +1,12 @@
+char **args = parse_input(line);
+if (args[0]) {
+    pid_t pid = fork();
+    if (pid == 0) {
+        execvp(args[0], args);
+        perror("exec failed");
+        exit(EXIT_FAILURE);
+    } else {
+        waitpid(pid, NULL, 0);
+    }
+}
+free_args(args);
